@@ -20,9 +20,11 @@ class ET extends Phaser.GameObjects.Sprite{
         }
         if(keyLEFT.isDown){
             this.x -= this.speed;
+            this.setFlipX(true);
         }
         if(keyRIGHT.isDown){
             this.x += this.speed;
+            this.setFlipX(false);
         }
 
         if(Phaser.Input.Keyboard.JustDown(keySPACE)){
