@@ -8,7 +8,7 @@ class Play extends Phaser.Scene{
            key: 'walk',
            frames: this.anims.generateFrameNumbers('ET', {frames: [0, 1, 2, 3]}),
            frameRate: 8,
-           repeat: -1            
+           repeat: -1        
         });
 
         const keys = ['walk'];
@@ -17,7 +17,6 @@ class Play extends Phaser.Scene{
         // bg.setScale(2);
         
         //background image
-        bg_map = 1;
         bg = this.add.sprite(game.config.width / 2, game.config.height / 2, 'map' + bg_map);
         
 
