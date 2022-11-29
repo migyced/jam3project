@@ -12,7 +12,8 @@ let config = {
 }
 
 let game = new Phaser.Game(config);
-let bg, bg_maps, bg_map;
+let bg, bg_map;
+let obstaclesGroup, holesGroup;
 
 // set UI sizes
 let borderUISize = game.config.height / 15;
