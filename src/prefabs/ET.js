@@ -5,7 +5,7 @@ class ET extends Phaser.GameObjects.Sprite{
         //this.sfxET = scene.sound.add('sound-name');
         this.speed = 4;
         this.hudHeight = 2 * 47;
-        this.horizontalMargin = 2*32;
+        this.horizontalMargin = 43;
         this.topMargin = 25;
     }
 
@@ -31,7 +31,7 @@ class ET extends Phaser.GameObjects.Sprite{
             //this is where E.T.'s special ability goes
         }
 
-        if(this.x < this.horizontalMargin){
+        if(this.x < -this.horizontalMargin){
             //if ET goes past the left screen border
             //temporary fix:
             this.x = game.config.width - this.horizontalMargin - 2*this.width;
@@ -133,7 +133,7 @@ class ET extends Phaser.GameObjects.Sprite{
     }
 
     reset(){
-        this.x = game.config.width/2;
-        this.y = game.config.height/2;
+        this.x = game.config.width/2 - 43;
+        this.y = game.config.height/2 - 63;
     }
 }
