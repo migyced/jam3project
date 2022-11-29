@@ -48,10 +48,6 @@ class Play extends Phaser.Scene{
         }
     }
     
-    collideObstacle() {
-        console.log("reach");
-    }
-    
     collideHole() {
         console.log("hole");
     }
