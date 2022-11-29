@@ -13,10 +13,17 @@ class Play extends Phaser.Scene{
 
         const keys = ['walk'];
         
-        bg = this.add.sprite(game.config.width/2, game.config.height/2,'background', 1);
-        bg.setScale(2);
+        // bg = this.add.sprite(game.config.width/2, game.config.height/2,'background', 1);
+        // bg.setScale(2);
+        
+        //background image
+        bg_maps = ['map1', 'map2', 'map3', 'map4', 'map5', 'map6'];
+        bg_map = 1;
+        bg = this.add.sprite(game.config.width / 2, game.config.height / 2, 'map' + bg_map);
+        
+        
 
-        this.mainSprite = new ET(this, game.config.width/2, game.config.height/2, 'ET').setOrigin(0,0);
+        this.mainSprite = new ET(this, 300, 125, 'ET').setOrigin(0,0);
         this.mainSprite.play('walk');
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
@@ -31,7 +38,7 @@ class Play extends Phaser.Scene{
     update(){
         if(this.gameOver){
             this.scene.start('endScene');
-        }else{
+        } else {
             this.mainSprite.update(bg);
         }
     }

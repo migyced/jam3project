@@ -4,7 +4,7 @@ class ET extends Phaser.GameObjects.Sprite{
         scene.add.existing(this);
         //this.sfxET = scene.sound.add('sound-name');
         this.speed = 4;
-        this.hudHeight = 2*47
+        this.hudHeight = 2 * 47;
         this.horizontalMargin = 2*32;
         this.topMargin = 25;
     }
@@ -35,74 +35,101 @@ class ET extends Phaser.GameObjects.Sprite{
             //if ET goes past the left screen border
             //temporary fix:
             this.x = game.config.width - this.horizontalMargin - 2*this.width;
-            if(bg.frame.name == 1){
-                bg.setFrame(3);
-            }else if(bg.frame.name == 2){
-                bg.setFrame(3);
-            }else if(bg.frame.name == 3){
-                bg.setFrame(4);
-            }else if(bg.frame.name == 4){
-                bg.setFrame(5);
-            }else if(bg.frame.name == 5){
-                bg.setFrame(2);
-            }else if(bg.frame.name == 6){
-                bg.setFrame(5);
+            if (bg_map == 1) {
+                bg_map = 3;
+                // bg.setTexture('map' + 3);
+            } else if (bg_map == 2) {
+                bg_map = 3;
+                // bg.setTexture(3);
+            } else if (bg_map == 3) {
+                bg_map = 4;
+                // bg.setTexture(4);
+            } else if (bg_map == 4) {
+                bg_map = 5;
+                // bg.setTexture(5);
+            } else if (bg_map == 5) {
+                bg_map = 2;
+                // bg.setTexture(2);
+            } else if (bg_map == 6) {
+                bg_map = 5;
+                // bg.setTexture(5);
             }
         }
         if(this.x > game.config.width-this.horizontalMargin){
             //if ET goes past the right screen border
             //temporary fix
             this.x = this.horizontalMargin;
-            if(bg.frame.name == 1){
-                bg.setFrame(5);
-            }else if(bg.frame.name == 2){
-                bg.setFrame(5);
-            }else if(bg.frame.name == 3){
-                bg.setFrame(2);
-            }else if(bg.frame.name == 4){
-                bg.setFrame(3);
-            }else if(bg.frame.name == 5){
-                bg.setFrame(4);
-            }else if(bg.frame.name == 6){
-                bg.setFrame(3);
+            if (bg_map == 1) {
+                bg_map = 5;
+                // bg.setTexture(5);
+            } else if (bg_map == 2) {
+                bg_map = 5;
+                // bg.setTexture(5);
+            } else if (bg_map == 3) {
+                bg_map = 2;
+                // bg.setTexture(2);
+            } else if (bg_map == 4) {
+                bg_map = 3;
+                // bg.setTexture(3);
+            } else if (bg_map == 5) {
+                bg_map = 4;
+                // bg.setTexture(4);
+            } else if (bg_map == 6) {
+                bg_map = 3;
+                // bg.setTexture(3);
             }
         }
         if(this.y < this.topMargin){
             //if ET goes past the top screen border
             //temporary fix
             this.y = game.config.height - 2*this.height - this.hudHeight;
-            if(bg.frame.name == 1){
-                bg.setFrame(4);
-            }else if(bg.frame.name == 2){
-                bg.setFrame(1);
-            }else if(bg.frame.name == 3){
-                bg.setFrame(1);
-            }else if(bg.frame.name == 4){
-                bg.setFrame(1);
-            }else if(bg.frame.name == 5){
-                bg.setFrame(1);
-            }else if(bg.frame.name == 6){
-                bg.setFrame(4);
+            if (bg_map == 1) {
+                bg_map = 4;
+                // bg.setTexture(4);
+            } else if (bg_map == 2) {
+                bg_map = 1;
+                // bg.setTexture(1);
+            } else if (bg_map == 3) {
+                bg_map = 1;
+                // bg.setTexture(1);
+            } else if (bg_map == 4) {
+                bg_map = 1;
+                // bg.setTexture(1);
+            } else if (bg_map == 5) {
+                bg_map = 1;
+                // bg.setTexture(1);
+            } else if (bg_map == 6) {
+                bg_map = 4;
+                // bg.setTexture(4);
             }
         }
         if(this.y > game.config.height - 2*this.height - this.hudHeight){
             //if ET goes past the bottom screen border
             //temporary fix
             this.y = this.topMargin;
-            if(bg.frame.name == 1){
-                bg.setFrame(2);
-            }else if(bg.frame.name == 2){
-                bg.setFrame(6);
-            }else if(bg.frame.name == 3){
-                bg.setFrame(6);
-            }else if(bg.frame.name == 4){
-                bg.setFrame(6);
-            }else if(bg.frame.name == 5){
-                bg.setFrame(6);
-            }else if(bg.frame.name == 6){
-                bg.setFrame(2);
+            if (bg_map == 1) {
+                console.log("reach");
+                bg_map = 2;
+                // bg.setTexture(2);
+            } else if (bg_map == 2) {
+                bg_map = 6;
+                // bg.setTexture(6);
+            } else if (bg_map == 3) {
+                bg_map = 6;
+                // bg.setTexture(6);
+            } else if (bg_map == 4) {
+                bg_map = 6;
+                // bg.setTexture(6);
+            } else if (bg_map == 5) {
+                bg_map = 6;
+                // bg.setTexture(6);
+            } else if (bg_map == 6) {
+                bg_map = 2;
+                // bg.setTexture(2);
             }
         }
+        
+        bg.setTexture('map' + bg_map);
     }
 
     reset(){
