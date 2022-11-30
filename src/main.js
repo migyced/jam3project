@@ -2,11 +2,18 @@ let config = {
     type: Phaser.CANVAS,
     width: 640,
     height: 420,
-    scene: [Load, Menu, Play, End]
+    scene: [Load, Menu, Play, End],
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: true,
+        }
+    },
 }
 
 let game = new Phaser.Game(config);
-var bg;
+let bg, bg_map;
+let obstaclesGroup, holesGroup;
 
 // set UI sizes
 let borderUISize = game.config.height / 15;
