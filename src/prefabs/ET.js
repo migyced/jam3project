@@ -3,6 +3,7 @@ class ET extends Phaser.GameObjects.Sprite {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
         this.scene.physics.add.existing(this);
+
         this.body.setGravity(0,10);
         //this.sfxET = scene.sound.add('sound-name');
         this.speed = 4;
@@ -12,7 +13,7 @@ class ET extends Phaser.GameObjects.Sprite {
         this.VELOCITY = 400;
     }
 
-    update(bg){
+    update(bg, npc){
         this.setScale(2);
         //movement
         if(keyUP.isDown){
@@ -66,6 +67,9 @@ class ET extends Phaser.GameObjects.Sprite {
             if(this.x < -this.horizontalMargin){
                 //if ET goes past the left screen border
                 //temporary fix:
+                if (npc && npcSpawned) {
+                    npc.body.x = game.config.width + this.horizontalMargin;
+                }
                 this.x = game.config.width - this.horizontalMargin - 2*this.width;
                 if (game.global.bg_map == 1) {
                     game.global.bg_map = 3;
@@ -91,6 +95,9 @@ class ET extends Phaser.GameObjects.Sprite {
             if(this.x > game.config.width-this.horizontalMargin){
                 //if ET goes past the right screen border
                 //temporary fix
+                if (npc && npcSpawned) {
+                    npc.body.x = - this.horizontalMargin;
+                }
                 this.x = this.horizontalMargin;
                 if (game.global.bg_map == 1) {
                     game.global.bg_map = 5;
@@ -116,6 +123,9 @@ class ET extends Phaser.GameObjects.Sprite {
             if(this.y < this.topMargin){
                 //if ET goes past the top screen border
                 //temporary fix
+                if (npc && npcSpawned) {
+                    npc.body.y = game.config.height + this.hudHeight;
+                }
                 this.y = game.config.height - 2*this.height - this.hudHeight;
                 if (game.global.bg_map == 1) {
                     game.global.bg_map = 4;
@@ -141,6 +151,7 @@ class ET extends Phaser.GameObjects.Sprite {
             if(this.y > game.config.height - 2*this.height - this.hudHeight){
                 //if ET goes past the bottom screen border
                 //temporary fix
+
                 this.y = this.topMargin;
                 if (game.global.bg_map == 1) {
                     game.global.bg_map = 2;
