@@ -10,6 +10,18 @@ class Play extends Phaser.Scene{
            frameRate: 8,
            repeat: -1        
         });
+        this.anims.create({
+            key: 'power',
+            frames: this.anims.generateFrameNumbers('ET', {frames: [3, 4, 5, 6]}),
+            frameRate: 8,
+            repeat: -1
+         });
+         this.anims.create({
+            key: 'unpower',
+            frames: this.anims.generateFrameNumbers('ET', {frames: [6, 5, 4, 3]}),
+            frameRate: 8,
+            repeat: -1
+         });
 
         const keys = ['walk'];
         
@@ -21,7 +33,7 @@ class Play extends Phaser.Scene{
         // bg.setScale(2);
         
         //background image
-        bg = this.add.sprite(game.config.width / 2, game.config.height / 2, 'map' + bg_map);
+        bg = this.add.sprite(game.config.width / 2, game.config.height / 2, 'map' + game.global.bg_map);
         
         piece1 = this.physics.add.sprite(90, 120, 'reeses');
         piece1.setScale(1.5);
@@ -43,7 +55,8 @@ class Play extends Phaser.Scene{
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
-        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE,);
+        keySPACE.emitOnRepeat = true;
         
         obstaclesGroup = this.add.group({});
         holesGroup = this.add.group({});
@@ -70,11 +83,13 @@ class Play extends Phaser.Scene{
             this.mainSprite.update(bg);
         }
         
-        console.log(energy);
+        //console.log(energy);
     }
     
     collideHole() {
-        console.log("hole");
+        console.log("hole");        
+        game.global.fall = true;
+        game.global.surface;
     }
     
     overlapPieces(sprite, piece) {

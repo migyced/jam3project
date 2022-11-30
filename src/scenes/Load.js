@@ -13,6 +13,8 @@ class Load extends Phaser.Scene{
         this.load.image('map4', './assets/map4.png');
         this.load.image('map5', './assets/map5.png');
         this.load.image('map6', './assets/map6.png');
+        this.load.image('map7', './assets/holes_scene_dirt.png');
+        this.load.image('map8', './assets/holes_scene_water.png');
         
         this.load.image('reeses', './assets/reeses_pieces.png');
         

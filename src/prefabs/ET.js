@@ -3,6 +3,7 @@ class ET extends Phaser.GameObjects.Sprite {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
         this.scene.physics.add.existing(this);
+        this.body.setGravity(0,10);
         //this.sfxET = scene.sound.add('sound-name');
         this.speed = 4;
         this.hudHeight = 2 * 47;
@@ -37,109 +38,131 @@ class ET extends Phaser.GameObjects.Sprite {
             this.body.setVelocityY(0);
         }
 
-        if(Phaser.Input.Keyboard.JustDown(keySPACE)){
-            //this is where E.T.'s special ability goes
-        }
+        // if(Phaser.Input.Keyboard.JustDown(keySPACE) && game.global.fall) {
+        //     this.play('power');
+        // }
+        // } else if (game.global.fall) {
+        //     this.play('unpower');
+        // }
+        // this.play('walk');
 
-        if(this.x < -this.horizontalMargin){
-            //if ET goes past the left screen border
-            //temporary fix:
-            this.x = game.config.width - this.horizontalMargin - 2*this.width;
-            if (bg_map == 1) {
-                bg_map = 3;
-                // bg.setTexture('map' + 3);
-            } else if (bg_map == 2) {
-                bg_map = 3;
-                // bg.setTexture(3);
-            } else if (bg_map == 3) {
-                bg_map = 4;
-                // bg.setTexture(4);
-            } else if (bg_map == 4) {
-                bg_map = 5;
-                // bg.setTexture(5);
-            } else if (bg_map == 5) {
-                bg_map = 2;
-                // bg.setTexture(2);
-            } else if (bg_map == 6) {
-                bg_map = 5;
-                // bg.setTexture(5);
-            }
-            this.updateMap(bg_map);
+        if(keySPACE.isDown && game.global.fall) {
+            //this is where E.T.'s special ability goes
+            this.body.setVelocityY(-(this.VELOCITY/3));
+            
         }
-        if(this.x > game.config.width-this.horizontalMargin){
-            //if ET goes past the right screen border
-            //temporary fix
-            this.x = this.horizontalMargin;
-            if (bg_map == 1) {
-                bg_map = 5;
-                // bg.setTexture(5);
-            } else if (bg_map == 2) {
-                bg_map = 5;
-                // bg.setTexture(5);
-            } else if (bg_map == 3) {
-                bg_map = 2;
-                // bg.setTexture(2);
-            } else if (bg_map == 4) {
-                bg_map = 3;
-                // bg.setTexture(3);
-            } else if (bg_map == 5) {
-                bg_map = 4;
-                // bg.setTexture(4);
-            } else if (bg_map == 6) {
-                bg_map = 3;
-                // bg.setTexture(3);
+        console.log(game.global.fall);
+        if (game.global.fall) {
+            this.updateMap(7);
+            if (this.y < this.topMargin) {
+                game.global.reposition = true;
+                game.global.fall = false;
+                this.body.setAllowGravity(false);
+                console.log(game.global.bg_map);
+                this.updateMap(game.global.bg_map);
+                this.play('walk');
             }
-            this.updateMap(bg_map);
-        }
-        if(this.y < this.topMargin){
-            //if ET goes past the top screen border
-            //temporary fix
-            this.y = game.config.height - 2*this.height - this.hudHeight;
-            if (bg_map == 1) {
-                bg_map = 4;
-                // bg.setTexture(4);
-            } else if (bg_map == 2) {
-                bg_map = 1;
-                // bg.setTexture(1);
-            } else if (bg_map == 3) {
-                bg_map = 1;
-                // bg.setTexture(1);
-            } else if (bg_map == 4) {
-                bg_map = 1;
-                // bg.setTexture(1);
-            } else if (bg_map == 5) {
-                bg_map = 1;
-                // bg.setTexture(1);
-            } else if (bg_map == 6) {
-                bg_map = 4;
-                // bg.setTexture(4);
+        } else {
+            if(this.x < -this.horizontalMargin){
+                //if ET goes past the left screen border
+                //temporary fix:
+                this.x = game.config.width - this.horizontalMargin - 2*this.width;
+                if (game.global.bg_map == 1) {
+                    game.global.bg_map = 3;
+                    // bg.setTexture('map' + 3);
+                } else if (game.global.bg_map == 2) {
+                    game.global.bg_map = 3;
+                    // bg.setTexture(3);
+                } else if (game.global.bg_map == 3) {
+                    game.global.bg_map = 4;
+                    // bg.setTexture(4);
+                } else if (game.global.bg_map == 4) {
+                    game.global.bg_map = 5;
+                    // bg.setTexture(5);
+                } else if (game.global.bg_map == 5) {
+                    game.global.bg_map = 2;
+                    // bg.setTexture(2);
+                } else if (game.global.bg_map == 6) {
+                    game.global.bg_map = 5;
+                    // bg.setTexture(5);
+                }
+                this.updateMap(game.global.bg_map);
             }
-            this.updateMap(bg_map);
-        }
-        if(this.y > game.config.height - 2*this.height - this.hudHeight){
-            //if ET goes past the bottom screen border
-            //temporary fix
-            this.y = this.topMargin;
-            if (bg_map == 1) {
-                bg_map = 2;
-                // bg.setTexture(2);
-            } else if (bg_map == 2) {
-                bg_map = 6;
-                // bg.setTexture(6);
-            } else if (bg_map == 3) {
-                bg_map = 6;
-                // bg.setTexture(6);
-            } else if (bg_map == 4) {
-                bg_map = 6;
-                // bg.setTexture(6);
-            } else if (bg_map == 5) {
-                bg_map = 6;
-                // bg.setTexture(6);
-            } else if (bg_map == 6) {
-                bg_map = 2;
-                // bg.setTexture(2);
+            if(this.x > game.config.width-this.horizontalMargin){
+                //if ET goes past the right screen border
+                //temporary fix
+                this.x = this.horizontalMargin;
+                if (game.global.bg_map == 1) {
+                    game.global.bg_map = 5;
+                    // bg.setTexture(5);
+                } else if (game.global.bg_map == 2) {
+                    game.global.bg_map = 5;
+                    // bg.setTexture(5);
+                } else if (game.global.bg_map == 3) {
+                    game.global.bg_map = 2;
+                    // bg.setTexture(2);
+                } else if (game.global.bg_map == 4) {
+                    game.global.bg_map = 3;
+                    // bg.setTexture(3);
+                } else if (game.global.bg_map == 5) {
+                    game.global.bg_map = 4;
+                    // bg.setTexture(4);
+                } else if (game.global.bg_map == 6) {
+                    game.global.bg_map = 3;
+                    // bg.setTexture(3);
+                }
+                this.updateMap(game.global.bg_map);
             }
-            this.updateMap(bg_map);
+            if(this.y < this.topMargin){
+                //if ET goes past the top screen border
+                //temporary fix
+                this.y = game.config.height - 2*this.height - this.hudHeight;
+                if (game.global.bg_map == 1) {
+                    game.global.bg_map = 4;
+                    // bg.setTexture(4);
+                } else if (game.global.bg_map == 2) {
+                    game.global.bg_map = 1;
+                    // bg.setTexture(1);
+                } else if (game.global.bg_map == 3) {
+                    game.global.bg_map = 1;
+                    // bg.setTexture(1);
+                } else if (game.global.bg_map == 4) {
+                    game.global.bg_map = 1;
+                    // bg.setTexture(1);
+                } else if (game.global.bg_map == 5) {
+                    game.global.bg_map = 1;
+                    // bg.setTexture(1);
+                } else if (game.global.bg_map == 6) {
+                    game.global.bg_map = 4;
+                    // bg.setTexture(4);
+                }
+                this.updateMap(game.global.bg_map);
+            }
+            if(this.y > game.config.height - 2*this.height - this.hudHeight){
+                //if ET goes past the bottom screen border
+                //temporary fix
+                this.y = this.topMargin;
+                if (game.global.bg_map == 1) {
+                    game.global.bg_map = 2;
+                    // bg.setTexture(2);
+                } else if (game.global.bg_map == 2) {
+                    game.global.bg_map = 6;
+                    // bg.setTexture(6);
+                } else if (game.global.bg_map == 3) {
+                    game.global.bg_map = 6;
+                    // bg.setTexture(6);
+                } else if (game.global.bg_map == 4) {
+                    game.global.bg_map = 6;
+                    // bg.setTexture(6);
+                } else if (game.global.bg_map == 5) {
+                    game.global.bg_map = 6;
+                    // bg.setTexture(6);
+                } else if (game.global.bg_map == 6) {
+                    game.global.bg_map = 2;
+                    // bg.setTexture(2);
+                }
+                this.updateMap(game.global.bg_map);
+            }
         }
     }
 
@@ -149,6 +172,7 @@ class ET extends Phaser.GameObjects.Sprite {
     }
     
     updateMap(map) {
+        console.log("update ", map);
         bg.setTexture('map' + map);
         obstaclesGroup.clear(true);
         holesGroup.clear(true);
@@ -157,7 +181,40 @@ class ET extends Phaser.GameObjects.Sprite {
         piece2.alpha = 0;
         piece3.alpha = 0;
         
-        
+        if (map == 7 || map == 8) {
+            obstaclesGroup.clear(true);
+            holesGroup.clear(true);
+
+            if (game.global.reposition == true) {
+                console.log("repos");
+                game.global.reposition = false;
+                this.x = 290;
+                this.y = 50;
+            }
+            if (!keySPACE.isDown) {
+                this.body.setVelocityY(this.VELOCITY/2);
+            }
+            this.body.setAllowGravity(true);
+            let ground = this.scene.add.rectangle(500,420,1000,42,0x6666ff);
+            let leftside = this.scene.add.rectangle(0,0,200,840,0x6666ff);
+            let rightside = this.scene.add.rectangle(500,420,30,840,0x6666ff);
+
+            this.scene.physics.add.existing(ground);
+            this.scene.physics.add.existing(leftside);
+            this.scene.physics.add.existing(rightside);
+
+            ground.body.setImmovable(true);
+            leftside.body.setImmovable(true);
+            rightside.body.setImmovable(true);
+
+            ground.alpha = 0;
+            leftside.alpha = 0;
+            rightside.alpha = 0;
+
+            obstaclesGroup.add(ground);
+            obstaclesGroup.add(leftside);
+            obstaclesGroup.add(rightside);
+        }
         if (map == 3) {
             let hole1 = this.scene.add.rectangle(325, 90, 100, 35, 0x6666ff);
             let hole2 = this.scene.add.rectangle(325, 285, 100, 45, 0x6666ff);
