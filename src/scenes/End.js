@@ -4,12 +4,12 @@ class End extends Phaser.Scene{
     }
 
     create(){
-        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCode.SPACE);
+        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
     }
 
     update(){
-        if(Phaser.Input.Keyboard.JustDown(keySPACE)){
+        if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
             this.scene.start('menuScene');
         }
     }

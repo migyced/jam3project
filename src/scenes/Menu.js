@@ -7,13 +7,19 @@ class Menu extends Phaser.Scene{
         bg = this.add.sprite(game.config.width/2, game.config.height/2,'background', 0);
         bg.setScale(2);
 
+        game.global = {
+            fall : false,
+            reposition : true,
+            bg_map : 0
+        }
+
         //define keys
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
 
     update(){
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-            bg_map = 1;
+            game.global.bg_map = 1;
             this.scene.start('playScene');
         }
     }
