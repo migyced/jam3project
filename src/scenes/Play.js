@@ -19,7 +19,6 @@ class Play extends Phaser.Scene{
         //background image
         bg = this.add.sprite(game.config.width / 2, game.config.height / 2, 'map' + bg_map);
         
-
         this.mainSprite = new ET(this, game.config.width/2 - 43, game.config.height / 2 - 63, 'ET').setOrigin(0,0);
         this.mainSprite.play('walk');
         
