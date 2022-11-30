@@ -235,9 +235,9 @@ class ET extends Phaser.GameObjects.Sprite {
             
             obstaclesGroup.add(pond);
         } else if (map == 6) {
-            let tree1 = this.scene.add.rectangle(460, 60, 100, 20, 0x6666ff);
-            let tree2 = this.scene.add.rectangle(470, 310, 150, 50, 0x6666ff);
-            let tree3 = this.scene.add.rectangle(250, 190, 130, 40, 0x6666ff);
+            let tree1 = this.scene.add.rectangle(460, 60, 100, 10, 0x6666ff);
+            let tree2 = this.scene.add.rectangle(470, 320, 150, 40, 0x6666ff);
+            let tree3 = this.scene.add.rectangle(250, 160, 130, 10, 0x6666ff);
             
             this.scene.physics.add.existing(tree1);
             this.scene.physics.add.existing(tree2);
