@@ -10,8 +10,22 @@ class Play extends Phaser.Scene{
            frameRate: 8,
            repeat: -1        
         });
+        
+        this.anims.create({
+           key: 'walkFBI',
+           frames: this.anims.generateFrameNumbers('FBI', {frames: [0, 1, 2, 3]}),
+           frameRate: 8,
+           repeat: -1        
+        });
+        
+        this.anims.create({
+           key: 'walkScientist',
+           frames: this.anims.generateFrameNumbers('scientist', {frames: [0, 1, 2, 3, 4]}),
+           frameRate: 8,
+           repeat: -1        
+        });
 
-        const keys = ['walk'];
+        const keys = ['walk', 'walkFBI', 'walkScientist'];
         
         piecesNum = 0;
         maxEnergy = 999;
@@ -60,14 +74,22 @@ class Play extends Phaser.Scene{
         
         this.gameOver = false;
         
-        // this.clock = this.time.addEvent({ delay: 100, callback: () => { this.updateEnergy() }, callbackScope: this, loop: true });
+        // clock to randomly spawn the NPCs
+        this.second = 1000;
+        this.timer = 0;
+        this.lastSpawnTime = 0;
+        npcSpawned = false;
+        this.clock = this.time.addEvent({delay: this.second, callback: this.spawnNPC, callbackScope: this, loop: true});
     }
 
-    update(){
+    update() {
         if(this.gameOver){
             this.scene.start('endScene');
         } else {
-            this.mainSprite.update(bg);
+            this.mainSprite.update(bg, this.npc);
+            if (this.npc && npcSpawned) {
+                this.npc.update(this.mainSprite);
+            }
         }
         
         console.log(energy);
@@ -81,11 +103,58 @@ class Play extends Phaser.Scene{
         if (piece.alpha == 1) {
             piecesGroup.killAndHide(piece);
             piece.body.enable = false;
-            
-            //  Add 100 energy, but it'll never go over maxEnergy
+        
             energy = Phaser.Math.MaxAdd(energy, 100, maxEnergy);
             piecesNum++;
         }
         
+    }
+    
+    spawnNPC() {
+        //increase timer
+        this.timer += 1;
+        
+        if (((this.timer - this.lastSpawnTime) / 100) > Math.random() && !npcSpawned) {
+            let random = Math.floor(Math.random() * 2) + 1;
+            if (random % 2) {
+                this.npc = new NPC(this, 0, 0, 'FBI', 0).setOrigin(0, 0);
+                this.npc.play('walkFBI');
+            } else {
+                this.npc = new NPC(this, 0, 0, 'scientist', 0).setOrigin(0, 0);
+                this.npc.play('walkScientist');
+            }
+            
+            this.npc.setScale(2);
+            
+            this.physics.add.overlap(this.mainSprite, this.npc, () => {this.captured(this.npc)});
+            
+            npcSpawned = true;
+        }
+        
+    }
+    
+    captured(npc) {
+        bg_map = 2;
+        this.mainSprite.updateMap(bg_map);
+        
+        npc.following = false;
+        
+        // console.log(npc.texture.key);
+        if (npc.texture.key == 'FBI') {
+            npc.body.x = 135;
+            npc.body.y = 110;
+            
+            this.mainSprite.body.x = 180;
+            this.mainSprite.body.y = 80;
+        } else if (npc.texture.key == 'scientist') {
+            npc.body.x = 520;
+            npc.body.y = 110;
+            
+            this.mainSprite.body.x = 430;
+            this.mainSprite.body.y = 80;
+        }
+        
+        // put with NPC capturing ET
+        this.lastSpawnTime = this.timer;
     }
 }

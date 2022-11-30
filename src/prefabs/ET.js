@@ -3,15 +3,13 @@ class ET extends Phaser.GameObjects.Sprite {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
         this.scene.physics.add.existing(this);
-        //this.sfxET = scene.sound.add('sound-name');
-        this.speed = 4;
         this.hudHeight = 2 * 47;
         this.horizontalMargin = 43;
         this.topMargin = 25;
         this.VELOCITY = 400;
     }
 
-    update(bg){
+    update(bg, npc){
         this.setScale(2);
         //movement
         if(keyUP.isDown){
@@ -43,6 +41,10 @@ class ET extends Phaser.GameObjects.Sprite {
 
         if(this.x < -this.horizontalMargin){
             //if ET goes past the left screen border
+            if (npc && npcSpawned) {
+                npc.body.x = game.config.width + this.horizontalMargin;
+            }
+            
             //temporary fix:
             this.x = game.config.width - this.horizontalMargin - 2*this.width;
             if (bg_map == 1) {
@@ -68,6 +70,10 @@ class ET extends Phaser.GameObjects.Sprite {
         }
         if(this.x > game.config.width-this.horizontalMargin){
             //if ET goes past the right screen border
+            if (npc && npcSpawned) {
+                npc.body.x = - this.horizontalMargin;
+            }
+            
             //temporary fix
             this.x = this.horizontalMargin;
             if (bg_map == 1) {
@@ -93,6 +99,10 @@ class ET extends Phaser.GameObjects.Sprite {
         }
         if(this.y < this.topMargin){
             //if ET goes past the top screen border
+            if (npc && npcSpawned) {
+                npc.body.y = game.config.height + this.hudHeight;
+            }
+            
             //temporary fix
             this.y = game.config.height - 2*this.height - this.hudHeight;
             if (bg_map == 1) {
@@ -116,8 +126,12 @@ class ET extends Phaser.GameObjects.Sprite {
             }
             this.updateMap(bg_map);
         }
-        if(this.y > game.config.height - 2*this.height - this.hudHeight){
+        if (this.y > game.config.height - 2 * this.height - this.hudHeight) {
             //if ET goes past the bottom screen border
+            if (npc && npcSpawned) {
+                npc.body.y = -this.hudHeight;
+            }
+            
             //temporary fix
             this.y = this.topMargin;
             if (bg_map == 1) {
