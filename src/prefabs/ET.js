@@ -17,17 +17,21 @@ class ET extends Phaser.GameObjects.Sprite {
         if(keyUP.isDown){
             // this.y -= this.speed;
             this.body.setVelocityY(-this.VELOCITY);
+            this.updateEnergy();
         } else if(keyDOWN.isDown){
             // this.y += this.speed;
             this.body.setVelocityY(this.VELOCITY);
+            this.updateEnergy();
         } else if(keyLEFT.isDown){
             // this.x -= this.speed;
             this.body.setVelocityX(-this.VELOCITY);
             this.setFlipX(true);
+            this.updateEnergy();
         } else if(keyRIGHT.isDown){
             // this.x += this.speed;
             this.body.setVelocityX(this.VELOCITY);
             this.setFlipX(false);
+            this.updateEnergy();
         } else if (!keyRIGHT.isDown && !keyLEFT.isDown && !keyDOWN.isDown && !keyUP.isDown) {
             this.body.setVelocityX(0);
             this.body.setVelocityY(0);
@@ -149,6 +153,11 @@ class ET extends Phaser.GameObjects.Sprite {
         obstaclesGroup.clear(true);
         holesGroup.clear(true);
         
+        piece1.alpha = 0;
+        piece2.alpha = 0;
+        piece3.alpha = 0;
+        
+        
         if (map == 3) {
             let hole1 = this.scene.add.rectangle(325, 90, 100, 35, 0x6666ff);
             let hole2 = this.scene.add.rectangle(325, 285, 100, 45, 0x6666ff);
@@ -209,6 +218,8 @@ class ET extends Phaser.GameObjects.Sprite {
             
             obstaclesGroup.add(rock1);
             obstaclesGroup.add(rock2);
+            
+            piece2.alpha = 1;
         } else if (map == 5) {
             let hole1 = this.scene.add.rectangle(175, 310, 140, 40, 0x6666ff);
             let hole2 = this.scene.add.rectangle(480, 315, 120, 40, 0x6666ff);
@@ -234,10 +245,12 @@ class ET extends Phaser.GameObjects.Sprite {
             pond.alpha = 0;
             
             obstaclesGroup.add(pond);
+            
+            piece3.alpha = 1;
         } else if (map == 6) {
             let tree1 = this.scene.add.rectangle(460, 60, 100, 10, 0x6666ff);
-            let tree2 = this.scene.add.rectangle(470, 320, 150, 40, 0x6666ff);
-            let tree3 = this.scene.add.rectangle(250, 160, 130, 10, 0x6666ff);
+            let tree2 = this.scene.add.rectangle(470, 350, 150, 40, 0x6666ff);
+            let tree3 = this.scene.add.rectangle(250, 180, 130, 10, 0x6666ff);
             
             this.scene.physics.add.existing(tree1);
             this.scene.physics.add.existing(tree2);
@@ -254,6 +267,17 @@ class ET extends Phaser.GameObjects.Sprite {
             obstaclesGroup.add(tree1);
             obstaclesGroup.add(tree2);
             obstaclesGroup.add(tree3);
+            
+            piece1.alpha = 1;
+        }
+    }
+    
+    updateEnergy() {
+        energy--;
+
+        if (energy === 0)
+        {
+            this.scene.gameOver = true;
         }
     }
 }
