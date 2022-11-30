@@ -96,7 +96,7 @@ class Play extends Phaser.Scene{
 
     update() {
         if(this.gameOver){
-            this.scene.start('endScene');
+            this.scene.start('menuScene');
         } else {
             this.mainSprite.update(bg, this.npc);
             if (this.npc && npcSpawned) {
