@@ -51,6 +51,12 @@ class Play extends Phaser.Scene{
         bg = this.add.sprite(game.config.width / 2, game.config.height / 2, 'map' + game.global.bg_map);
         uiBars = this.add.sprite(game.config.width/2, game.config.height/2, 'ui_bars');
 
+        energyText = this.add.text((game.config.width/2)-55, game.config.height-62, energy, {
+            font: "60px Arial",
+            fill: "#ffffff",
+            align: "left"
+        });
+
         piece1 = this.physics.add.sprite(90, 120, 'reeses');
         piece1.setScale(1.5);
         
@@ -103,6 +109,7 @@ class Play extends Phaser.Scene{
             this.scene.start('menuScene');
         } else {
             this.mainSprite.update(bg, this.npc);
+            energyText.text = energy;
             if (this.npc && npcSpawned) {
                 this.npc.update(this.mainSprite);
             }
