@@ -92,6 +92,7 @@ class Play extends Phaser.Scene{
         piece3.alpha = 0;
         
         this.mainSprite = new ET(this, game.config.width/2 - 43, game.config.height / 2 - 63, 'ET').setOrigin(0,0);
+        this.mainSprite.setScale(1.5);
         this.mainSprite.play('walk');
         
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
