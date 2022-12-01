@@ -3,8 +3,6 @@ class ET extends Phaser.GameObjects.Sprite {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
         this.scene.physics.add.existing(this);
-
-        this.body.setGravity(0,10);
         //this.sfxET = scene.sound.add('sound-name');
         this.speed = 4;
         this.hudHeight = 2 * 47;
@@ -15,7 +13,7 @@ class ET extends Phaser.GameObjects.Sprite {
     }
 
     update(bg, npc){
-        this.setScale(2);
+        //this.setScale(2);
         //movement
         if(keyUP.isDown){
             // this.y -= this.speed;
@@ -53,14 +51,11 @@ class ET extends Phaser.GameObjects.Sprite {
             this.body.setVelocityY(-(this.VELOCITY/3));
             
         }
-        console.log(game.global.fall);
         if (game.global.fall) {
             this.updateMap(7);
             if (this.y < this.topMargin) {
                 game.global.reposition = true;
                 game.global.fall = false;
-                this.body.setAllowGravity(false);
-                console.log(game.global.bg_map);
                 this.updateMap(game.global.bg_map);
                 this.play('walk');
             }
@@ -184,7 +179,6 @@ class ET extends Phaser.GameObjects.Sprite {
     }
     
     updateMap(map) {
-        console.log("update ", map);
         bg.setTexture('map' + map);
         obstaclesGroup.clear(true);
         holesGroup.clear(true);
@@ -198,7 +192,6 @@ class ET extends Phaser.GameObjects.Sprite {
             holesGroup.clear(true);
 
             if (game.global.reposition == true) {
-                console.log("repos");
                 game.global.reposition = false;
                 this.x = 290;
                 this.y = 50;
@@ -206,10 +199,9 @@ class ET extends Phaser.GameObjects.Sprite {
             if (!keySPACE.isDown) {
                 this.body.setVelocityY(this.VELOCITY/2);
             }
-            this.body.setAllowGravity(true);
-            let ground = this.scene.add.rectangle(500,420,1000,42,0x6666ff);
-            let leftside = this.scene.add.rectangle(0,0,200,840,0x6666ff);
-            let rightside = this.scene.add.rectangle(500,420,30,840,0x6666ff);
+            let ground = this.scene.add.rectangle(500,420 + this.topUI,1000,42,0x6666ff);
+            let leftside = this.scene.add.rectangle(0,0,200 + this.topUI,840,0x6666ff);
+            let rightside = this.scene.add.rectangle(500,420 + this.topUI,30,840,0x6666ff);
 
             this.scene.physics.add.existing(ground);
             this.scene.physics.add.existing(leftside);
