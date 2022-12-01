@@ -74,6 +74,9 @@ class Play extends Phaser.Scene{
         phoneUI.setScale(0.45);
         phoneNum = 0;
 
+        symbols = this.add.sprite((game.config.width/2), 33, "symbols");
+        symbols.setScale(0.4);
+
         piece1 = this.physics.add.sprite(90, 120, 'reeses');
         piece1.setScale(1.5);
         
@@ -210,7 +213,7 @@ class Play extends Phaser.Scene{
         }
     }
 
-    phoneUpdate(){
+    phoneUpdate(){//the places where the phone is hidden in the map still needs to be implemented
         if(phoneNum == 0){
             phoneUI.setTexture("phone2");
             phoneUI.setAlpha(0);

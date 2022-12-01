@@ -26,7 +26,7 @@ class Load extends Phaser.Scene{
         this.load.image('phone3', './assets/phone3.png');
         this.load.image('secondPhone', './assets/secondPhone.png');
         this.load.image('thirdPhone', './assets/thirdPhone.png');
-        this.load.image('symbols', './assets/zones.png');
+        this.load.spritesheet('symbols', './assets/zones.png', {frameWidth: 130, frameHeight: 200, endFrame: 6});
         
         //this.load.audio();
     }
