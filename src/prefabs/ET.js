@@ -230,19 +230,19 @@ class ET extends Phaser.GameObjects.Sprite {
             symbols.setFrame(0);
         }
         if (map == 3) {
-            let hole1 = this.scene.add.rectangle(325, 90 + this.topUI, 100, 35, 0x6666ff);
+            // let hole1 = this.scene.add.rectangle(325, 90 + this.topUI, 100, 35, 0x6666ff);
             let hole2 = this.scene.add.rectangle(325, 285 + this.topUI, 100, 45, 0x6666ff);
             
-            this.scene.physics.add.existing(hole1);
+            // this.scene.physics.add.existing(hole1);
             this.scene.physics.add.existing(hole2);
             
-            hole1.body.setImmovable();
+            // hole1.body.setImmovable();
             hole2.body.setImmovable();
             
-            hole1.alpha = 0;
+            // hole1.alpha = 0;
             hole2.alpha = 0;
             
-            holesGroup.add(hole1);
+            // holesGroup.add(hole1);
             holesGroup.add(hole2);
             
             // let tree1 = this.scene.add.rectangle(130, 300 + this.topUI, 45, 140, 0x6666ff);
