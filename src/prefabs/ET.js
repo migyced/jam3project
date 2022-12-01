@@ -120,7 +120,7 @@ class ET extends Phaser.GameObjects.Sprite {
                 //if ET goes past the top screen border
                 //temporary fix
                 if (npc && npcSpawned) {
-                    npc.body.y = game.config.height + this.hudHeight;
+                    npc.body.y = game.config.height + this.hudHeight + this.topUI;
                 }
                 this.y = game.config.height - 2*this.height - this.hudHeight;
                 if (game.global.bg_map == 1) {
@@ -148,7 +148,7 @@ class ET extends Phaser.GameObjects.Sprite {
                 //if ET goes past the bottom screen border
                 //temporary fix
                 if (npc && npcSpawned) {
-                    npc.body.y = -this.hudHeight;
+                    npc.body.y = -this.hudHeight - this.topUI;
                 }
 
                 this.y = this.topMargin;
