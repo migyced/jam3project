@@ -14,7 +14,7 @@ let config = {
 let game = new Phaser.Game(config);
 let bg, bg_map;
 let uiBars, energyText, piecesText, sceneName;
-let symols;
+let symbols;
 let phoneUI;
 let obstaclesGroup, holesGroup;
 let piece1, piece2, piece3, piecesGroup;
