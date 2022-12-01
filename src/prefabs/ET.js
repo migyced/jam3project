@@ -68,7 +68,10 @@ class ET extends Phaser.GameObjects.Sprite {
             if(this.x < -this.horizontalMargin){
                 //if ET goes past the left screen border
                 //temporary fix:
+                console.log(npc);
+                console.log(npcSpawned);
                 if (npc && npcSpawned) {
+                    console.log("reach");
                     npc.body.x = game.config.width + this.horizontalMargin;
                 }
                 this.x = game.config.width - this.horizontalMargin - 2*this.width;
@@ -152,6 +155,9 @@ class ET extends Phaser.GameObjects.Sprite {
             if(this.y > game.config.height - 2*this.height - this.hudHeight){
                 //if ET goes past the bottom screen border
                 //temporary fix
+                if (npc && npcSpawned) {
+                    npc.body.y = -this.hudHeight;
+                }
 
                 this.y = this.topMargin;
                 if (game.global.bg_map == 1) {
