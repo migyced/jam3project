@@ -51,8 +51,20 @@ class Play extends Phaser.Scene{
         bg = this.add.sprite(game.config.width / 2, game.config.height / 2, 'map' + game.global.bg_map);
         uiBars = this.add.sprite(game.config.width/2, game.config.height/2, 'ui_bars');
 
-        energyText = this.add.text((game.config.width/2)-55, game.config.height-62, energy, {
+        energyText = this.add.text((game.config.width/5), game.config.height-62, energy, {
             font: "60px Arial",
+            fill: "#ffffff",
+            align: "left"
+        });
+
+        piecesText = this.add.text((game.config.width/6)-40, game.config.height-62, piecesNum, {
+            font: "60px Arial",
+            fill: "#ffffff",
+            align: "left"
+        });
+
+        sceneName = this.add.text((game.config.width*(5/8)), (game.config.height-62), "Forest", {
+            font: "58px Arial",
             fill: "#ffffff",
             align: "left"
         });
@@ -109,7 +121,7 @@ class Play extends Phaser.Scene{
             this.scene.start('menuScene');
         } else {
             this.mainSprite.update(bg, this.npc);
-            energyText.text = energy;
+            this.textUpdate();
             if (this.npc && npcSpawned) {
                 this.npc.update(this.mainSprite);
             }
@@ -181,5 +193,14 @@ class Play extends Phaser.Scene{
         
         // put with NPC capturing ET
         this.lastSpawnTime = this.timer;
+    }
+
+    textUpdate(){
+        energyText.text = energy;
+        piecesText.text = piecesNum;
+        //console.log();
+        if(bg.frame == 1){
+            sceneName.text = "Poop";
+        }
     }
 }

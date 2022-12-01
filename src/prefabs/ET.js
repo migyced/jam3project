@@ -225,6 +225,7 @@ class ET extends Phaser.GameObjects.Sprite {
             obstaclesGroup.add(ground);
             obstaclesGroup.add(leftside);
             obstaclesGroup.add(rightside);
+            sceneName.text = "Well";
         }
         if (map == 3) {
             let hole1 = this.scene.add.rectangle(325, 90, 100, 35, 0x6666ff);
@@ -256,6 +257,7 @@ class ET extends Phaser.GameObjects.Sprite {
             
             obstaclesGroup.add(tree1);
             obstaclesGroup.add(tree2);
+            sceneName.text = "Field";
         } else if (map == 4) {
             let hole1 = this.scene.add.rectangle(195, 110, 120, 30, 0x6666ff);
             let hole2 = this.scene.add.rectangle(480, 320, 140, 40, 0x6666ff);
@@ -288,6 +290,7 @@ class ET extends Phaser.GameObjects.Sprite {
             obstaclesGroup.add(rock2);
             
             piece2.alpha = 1;
+            sceneName.text = "Field";
         } else if (map == 5) {
             let hole1 = this.scene.add.rectangle(175, 310, 140, 40, 0x6666ff);
             let hole2 = this.scene.add.rectangle(480, 315, 120, 40, 0x6666ff);
@@ -315,6 +318,7 @@ class ET extends Phaser.GameObjects.Sprite {
             obstaclesGroup.add(pond);
             
             piece3.alpha = 1;
+            sceneName.text = "Pond";
         } else if (map == 6) {
             let tree1 = this.scene.add.rectangle(460, 60, 100, 10, 0x6666ff);
             let tree2 = this.scene.add.rectangle(470, 350, 150, 40, 0x6666ff);
@@ -337,6 +341,11 @@ class ET extends Phaser.GameObjects.Sprite {
             obstaclesGroup.add(tree3);
             
             piece1.alpha = 1;
+            sceneName.text = "Field";
+        }else if(map == 2){
+            sceneName.text = "DC";
+        }else if(map == 1){
+            sceneName.text = "Forest";
         }
     }
     
