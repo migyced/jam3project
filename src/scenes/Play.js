@@ -46,8 +46,11 @@ class Play extends Phaser.Scene{
         // bg.setScale(2);
         
         //background image
-        bg = this.add.sprite(game.config.width / 2, game.config.height / 2, 'map' + game.global.bg_map);
         
+       
+        bg = this.add.sprite(game.config.width / 2, game.config.height / 2, 'map' + game.global.bg_map);
+        uiBars = this.add.sprite(game.config.width/2, game.config.height/2, 'ui_bars');
+
         piece1 = this.physics.add.sprite(90, 120, 'reeses');
         piece1.setScale(1.5);
         
@@ -95,6 +98,7 @@ class Play extends Phaser.Scene{
     }
 
     update() {
+        
         if(this.gameOver){
             this.scene.start('menuScene');
         } else {
