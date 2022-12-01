@@ -14,9 +14,11 @@ let config = {
 let game = new Phaser.Game(config);
 let bg, bg_map;
 let uiBars, energyText, piecesText, sceneName;
+let symols;
+let phoneUI;
 let obstaclesGroup, holesGroup;
 let piece1, piece2, piece3, piecesGroup;
-let maxEnergy, energy, piecesNum;
+let maxEnergy, energy, piecesNum, phoneNum;
 let npcSpawned;
 
 // set UI sizes
