@@ -75,6 +75,7 @@ class Play extends Phaser.Scene{
         phoneNum = 0;
 
         symbols = this.add.sprite((game.config.width/2), 33, "symbols");
+        symbols.setFrame(5);
         symbols.setScale(0.4);
 
         piece1 = this.physics.add.sprite(90, 120, 'reeses');
