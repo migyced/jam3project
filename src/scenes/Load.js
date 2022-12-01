@@ -6,8 +6,8 @@ class Load extends Phaser.Scene{
     preload(){
         this.load.spritesheet('background', './assets/background_spritesheet.png', { frameWidth: 320, frameHeight: 210, endFrame: 8, margin: 1, spacing: 3 });
         this.load.spritesheet('ET', './assets/ET_sprites.png', { frameWidth: 43, frameHeight: 63, endFrame: 6, spacing: 1 });
-        this.load.spritesheet('FBI', './assets/fbi_spritesheet.png', { frameWidth: 17, frameHeight: 28, endFrame: 4, spacing: 1 });
-        this.load.spritesheet('scientist', './assets/scientist_spritesheet.png', { frameWidth: 17, frameHeight: 28, endFrame: 5, spacing: 1 });
+        this.load.spritesheet('FBI', './assets/fbi_sprite.png', { frameWidth: 42, frameHeight: 64, endFrame: 3 });
+        this.load.spritesheet('scientist', './assets/scientist_sprite.png', { frameWidth: 42, frameHeight: 64, endFrame: 3 });
         
         this.load.image('map1', './assets/map1.png');
         this.load.image('map2', './assets/map2.png');
