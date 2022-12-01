@@ -19,6 +19,8 @@ class Load extends Phaser.Scene{
         this.load.image('map8', './assets/holes_scene_water.png');
         
         this.load.image('reeses', './assets/reeses_pieces.png');
+
+        this.load.image('ui_bars', './assets/uibars2.png');
         
         //this.load.audio();
     }
