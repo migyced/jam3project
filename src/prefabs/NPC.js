@@ -13,16 +13,16 @@ class NPC extends Phaser.GameObjects.Sprite {
       this.scene.physics.moveToObject(this, player, 125);
     } else {
       this.body.setVelocity(0, 0);
-      if (this.texture.key == 'FBI') {
-        this.x -= 1;
-      } else if (this.texture.key == 'scientist') {
-        this.x += 1;
-      }
+      // if (this.texture.key == 'FBI') {
+      //   this.x -= 1;
+      // } else if (this.texture.key == 'scientist') {
+      //   this.x += 1;
+      // }
       
-      if (this.x < -this.horizontalMargin || this.x > game.config.width - this.horizontalMargin) {
+      // if (this.x < -this.horizontalMargin || this.x > game.config.width - this.horizontalMargin) {
         npcSpawned = false;
         this.destroy();
-      }
+      // }
     }
   }
 
