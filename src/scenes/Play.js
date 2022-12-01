@@ -69,6 +69,11 @@ class Play extends Phaser.Scene{
             align: "left"
         });
 
+        phoneUI = this.add.image((config.width/5), 35, "phone2");
+        phoneUI.setAlpha(0);
+        phoneUI.setScale(0.45);
+        phoneNum = 0;
+
         piece1 = this.physics.add.sprite(90, 120, 'reeses');
         piece1.setScale(1.5);
         
@@ -122,6 +127,7 @@ class Play extends Phaser.Scene{
         } else {
             this.mainSprite.update(bg, this.npc);
             this.textUpdate();
+            this.phoneUpdate();
             if (this.npc && npcSpawned) {
                 this.npc.update(this.mainSprite);
             }
@@ -201,6 +207,23 @@ class Play extends Phaser.Scene{
         //console.log();
         if(bg.frame == 1){
             sceneName.text = "Poop";
+        }
+    }
+
+    phoneUpdate(){
+        if(phoneNum == 0){
+            phoneUI.setTexture("phone2");
+            phoneUI.setAlpha(0);
+        }else if(phoneNum == 1){
+            phoneUI.setTexture("phone2");
+            phoneUI.setAlpha(1);
+        }else if(phoneNum == 2){
+            phoneUI.setTexture("secondPhone");
+            phoneUI.setAlpha(1);
+        }else if(phoneNum == 3){
+            phoneUI.setTexture("thirdPhone");
+            phoneUI.setAlpha(1);
+            //The player also wins??
         }
     }
 }

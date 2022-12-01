@@ -21,6 +21,12 @@ class Load extends Phaser.Scene{
         this.load.image('reeses', './assets/reeses_pieces.png');
 
         this.load.image('ui_bars', './assets/uibars2.png');
+        this.load.image('phone1', './assets/phone1.png');
+        this.load.image('phone2', './assets/phone2.png');
+        this.load.image('phone3', './assets/phone3.png');
+        this.load.image('secondPhone', './assets/secondPhone.png');
+        this.load.image('thirdPhone', './assets/thirdPhone.png');
+        this.load.image('symbols', './assets/zones.png');
         
         //this.load.audio();
     }
