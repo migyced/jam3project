@@ -245,20 +245,20 @@ class ET extends Phaser.GameObjects.Sprite {
             holesGroup.add(hole1);
             holesGroup.add(hole2);
             
-            let tree1 = this.scene.add.rectangle(130, 300 + this.topUI, 45, 140, 0x6666ff);
-            let tree2 = this.scene.add.rectangle(520, 300 + this.topUI, 45, 140, 0x6666ff);
+            // let tree1 = this.scene.add.rectangle(130, 300 + this.topUI, 45, 140, 0x6666ff);
+            // let tree2 = this.scene.add.rectangle(520, 300 + this.topUI, 45, 140, 0x6666ff);
             
-            this.scene.physics.add.existing(tree1);
-            this.scene.physics.add.existing(tree2);
+            // this.scene.physics.add.existing(tree1);
+            // this.scene.physics.add.existing(tree2);
             
-            tree1.body.setImmovable(true);
-            tree2.body.setImmovable(true);
+            // tree1.body.setImmovable(true);
+            // tree2.body.setImmovable(true);
             
-            tree1.alpha = 0;
-            tree2.alpha = 0;
+            // tree1.alpha = 0;
+            // tree2.alpha = 0;
             
-            obstaclesGroup.add(tree1);
-            obstaclesGroup.add(tree2);
+            // obstaclesGroup.add(tree1);
+            // obstaclesGroup.add(tree2);
             sceneName.text = "Field";
             symbols.setFrame(2);
         } else if (map == 4) {
