@@ -9,6 +9,10 @@ class NPC extends Phaser.GameObjects.Sprite {
   }
 
   update(player) {
+    if (game.global.fall) {
+      this.following = false;
+      this.body.setVelocity(0, 0);
+    }
     if (this.following) {
       this.scene.physics.moveToObject(this, player, 125);
     } else {
