@@ -10,6 +10,7 @@ class ET extends Phaser.GameObjects.Sprite {
         this.topMargin = 25;
         this.VELOCITY = 400;
         this.topUI = 60;
+        this.controllable = false;
     }
 
     update(bg, npc){
@@ -56,6 +57,7 @@ class ET extends Phaser.GameObjects.Sprite {
             if (this.y < this.topMargin) {
                 game.global.reposition = true;
                 game.global.fall = false;
+                game.global.show_phone = false;
                 this.updateMap(game.global.bg_map);
                 this.play('walk');
             }
@@ -189,6 +191,10 @@ class ET extends Phaser.GameObjects.Sprite {
         piece1.alpha = 0;
         piece2.alpha = 0;
         piece3.alpha = 0;
+
+        phone1.alpha = 0;
+        phone2.alpha = 0;
+        phone3.alpha = 0;
         
         if (map == 7 || map == 8) {
             obstaclesGroup.clear(true);
@@ -223,6 +229,16 @@ class ET extends Phaser.GameObjects.Sprite {
             obstaclesGroup.add(rightside);
             sceneName.text = "Well";
             symbols.setFrame(0);
+            
+            if (game.global.show_phone) {
+                if (game.global.phone_num == 1) {
+                    phone1.alpha = 1;
+                } else if (game.global.phone_num == 2) {
+                    phone2.alpha = 1;
+                } else if (game.global.phone_num == 3) {
+                    phone3.alpha = 1;
+                }
+            }
         }
         if (map == 3) {
             // let hole1 = this.scene.add.rectangle(325, 90 + this.topUI, 100, 35, 0x6666ff);

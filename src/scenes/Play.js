@@ -36,6 +36,13 @@ class Play extends Phaser.Scene{
            repeat: -1        
         });
 
+        this.anims.create({
+            key: 'spaceship_anim',
+            frames: this.anims.generateFrameNumbers('spaceship', {start: 0, end: 2}),
+            frameRate: 8,
+            repeat: -1
+        })
+
         const keys = ['walk', 'power', 'unpower', 'walkFBI', 'walkScientist'];
         
         piecesNum = 0;
@@ -69,10 +76,14 @@ class Play extends Phaser.Scene{
             align: "left"
         });
 
-        phoneUI = this.add.image((config.width/5), 35, "phone2");
-        phoneUI.setAlpha(0);
-        phoneUI.setScale(0.45);
-        phoneNum = 0;
+        phoneUI1 = this.add.image((config.width/5), 35, "phone1");
+        phoneUI1.setAlpha(0);
+        phoneUI1.setScale(0.45);
+
+        phoneUI2 = this.add.image((config.width/5 + 7), 20, "phone3");
+        phoneUI2.setAlpha(0);
+        phoneUI2.setAngle(10)
+        phoneUI2.setScale(0.35);
 
         symbols = this.add.sprite((game.config.width/2), 33, "symbols");
         symbols.setFrame(5);
@@ -91,8 +102,20 @@ class Play extends Phaser.Scene{
         piece2.alpha = 0;
         piece3.alpha = 0;
         
-        this.mainSprite = new ET(this, game.config.width/2 - 43, game.config.height / 2 - 63, 'ET').setOrigin(0,0);
-        this.mainSprite.setScale(1.5);
+        phone1 = this.physics.add.sprite(game.config.width / 3, 420, 'phone1');
+        phone1.setScale(0.3);
+
+        phone2 = this.physics.add.sprite(game.config.width / 3, 420, 'phone2');
+        phone2.setScale(0.3);
+
+        phone3 = this.physics.add.sprite(game.config.width / 3, 420, 'phone3');
+        phone3.setScale(0.3);
+
+        phone1.alpha = 0;
+        phone2.alpha = 0;
+        phone3.alpha = 0;
+
+        this.mainSprite = new ET(this, game.config.width/2, -150, 'ET').setScale(1.5);
         this.mainSprite.play('walk');
         
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -105,53 +128,125 @@ class Play extends Phaser.Scene{
         obstaclesGroup = this.add.group({});
         holesGroup = this.add.group({});
         piecesGroup = this.add.group({});
+        phoneGroup = this.add.group({});
         
         piecesGroup.add(piece1);
         piecesGroup.add(piece2);
         piecesGroup.add(piece3);
+
+        phoneGroup.add(phone1);
+        phoneGroup.add(phone2);
+        phoneGroup.add(phone3);
 
         this.playerObstacleCollider = this.physics.add.collider(obstaclesGroup, this.mainSprite);
         this.playerHoleCollider = this.physics.add.collider(holesGroup, this.mainSprite, this.collideHole);
         
         this.physics.add.overlap(this.mainSprite, piecesGroup, this.overlapPieces);
         
+        this.physics.add.overlap(this.mainSprite, phoneGroup, this.overlapPhone);
+
         this.gameOver = false;
         
-        // clock to randomly spawn the NPCs
-        this.second = 1000;
-        this.timer = 0;
-        this.lastSpawnTime = 0;
-        npcSpawned = false;
-        this.clock = this.time.addEvent({delay: this.second, callback: this.spawnNPC, callbackScope: this, loop: true});
+        this.spaceship = this.physics.add.sprite(game.config.width/2, -150, 'spaceship').setScale(1.5).play('spaceship_anim');
+        this.tweens.add ({
+            targets: [this.spaceship],
+            y: game.config.height/2,
+            duration: 3000,
+            yoyo: true,
+            ease: 'Quad.easeInOut',
+            onComplete: () => {
+                this.mainSprite.controllable = true;
+                this.spaceship.anims.pause();
+                this.spaceship.setAlpha(0);
+                this.spaceship.setPosition(game.config.width/2, game.config.height/2);
+
+                this.physics.add.overlap(this.mainSprite, this.spaceship, () => {
+                    if (this.spaceship.alpha == 1) {
+                        this.mainSprite.controllable = false;
+                        this.mainSprite.body.destroy();
+                        this.mainSprite.setPosition(game.config.width/2, game.config.height/2);
+                        this.tweens.add ({
+                            targets: [this.mainSprite, this.spaceship],
+                            y: -150,
+                            duration: 3000,
+                            ease: 'Quad.easeInOut',
+                            onComplete: () => {
+                                this.scene.start('menuScene');
+                            }
+                        });
+                    }
+                });
+
+
+
+                // clock to randomly spawn the NPCs
+                this.second = 1000;
+                this.timer = 0;
+                this.lastSpawnTime = 0;
+                npcSpawned = false;
+                this.clock = this.time.addEvent({delay: this.second, callback: this.spawnNPC, callbackScope: this, loop: true});
+            }
+        });
+        this.tweens.add ({
+            targets: [this.mainSprite],
+            y: game.config.height/2,
+            duration: 3000,
+            ease: 'Quad.easeInOut'
+        });
     }
 
     update() {
-        
+        //console.log(this.spaceship.alpha)
+        if (game.global.phone_num == 4) {
+            if (game.global.bg_map == 1) {
+                this.spaceship.setAlpha(1);
+            } else {
+                this.spaceship.setAlpha(0);
+            }
+        }
         if(this.gameOver){
             this.scene.start('menuScene');
         } else {
-            this.mainSprite.update(bg, this.npc);
-            this.textUpdate();
-            this.phoneUpdate();
-            if (this.npc && npcSpawned) {
-                this.npc.update(this.mainSprite);
+            if (this.mainSprite.controllable) {
+                this.mainSprite.update(bg, this.npc);
+                this.textUpdate();
+                this.phoneUpdate();
+                if (this.npc && npcSpawned) {
+                    this.npc.update(this.mainSprite);
+                }
             }
         }
-        
-        //console.log(energy);
     }
     
     collideHole() {
-        console.log("hole");        
+        console.log("hole");
+        let rand = Phaser.Math.FloatBetween(0, 1);
+        if (rand >= 0.33 && game.global.phone_num != 4) {
+            game.global.show_phone = true;
+        }
         game.global.fall = true;
         game.global.surface;
     }
-    
+      
+    overlapPhone(sprite, phone) {
+        if (phone.alpha == 1) {
+            phoneGroup.killAndHide(phone);
+            phone.body.enable = false;
+            if (game.global.phone_num == 1) {
+                phoneUI1.setAlpha(1);
+            } else if (game.global.phone_num == 3) {
+                phoneUI2.setAlpha(1);
+            }
+            game.global.phone_num++;
+            game.global.show_phone = false;
+        }
+        
+    }
     overlapPieces(sprite, piece) {
         if (piece.alpha == 1) {
             piecesGroup.killAndHide(piece);
             piece.body.enable = false;
-        
+
             energy = Phaser.Math.MaxAdd(energy, 100, maxEnergy);
             piecesNum++;
         }
@@ -228,7 +323,6 @@ class Play extends Phaser.Scene{
         }else if(phoneNum == 3){
             phoneUI.setTexture("thirdPhone");
             phoneUI.setAlpha(1);
-            //The player also wins??
         }
     }
 }
