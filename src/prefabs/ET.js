@@ -3,8 +3,6 @@ class ET extends Phaser.GameObjects.Sprite {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
         this.scene.physics.add.existing(this);
-
-        this.body.setGravity(0,10);
         //this.sfxET = scene.sound.add('sound-name');
         this.speed = 4;
         this.hudHeight = 2 * 47;
@@ -15,7 +13,7 @@ class ET extends Phaser.GameObjects.Sprite {
     }
 
     update(bg, npc){
-        this.setScale(2);
+        //this.setScale(2);
         //movement
         if(keyUP.isDown){
             // this.y -= this.speed;
@@ -53,14 +51,11 @@ class ET extends Phaser.GameObjects.Sprite {
             this.body.setVelocityY(-(this.VELOCITY/3));
             
         }
-        console.log(game.global.fall);
         if (game.global.fall) {
             this.updateMap(7);
             if (this.y < this.topMargin) {
                 game.global.reposition = true;
                 game.global.fall = false;
-                this.body.setAllowGravity(false);
-                console.log(game.global.bg_map);
                 this.updateMap(game.global.bg_map);
                 this.play('walk');
             }
@@ -125,7 +120,7 @@ class ET extends Phaser.GameObjects.Sprite {
                 //if ET goes past the top screen border
                 //temporary fix
                 if (npc && npcSpawned) {
-                    npc.body.y = game.config.height + this.hudHeight;
+                    npc.body.y = game.config.height + this.hudHeight + this.topUI;
                 }
                 this.y = game.config.height - 2*this.height - this.hudHeight;
                 if (game.global.bg_map == 1) {
@@ -152,6 +147,9 @@ class ET extends Phaser.GameObjects.Sprite {
             if(this.y > game.config.height - 2*this.height - this.hudHeight){
                 //if ET goes past the bottom screen border
                 //temporary fix
+                if (npc && npcSpawned) {
+                    npc.body.y = -this.hudHeight - this.topUI;
+                }
 
                 this.y = this.topMargin;
                 if (game.global.bg_map == 1) {
@@ -184,7 +182,6 @@ class ET extends Phaser.GameObjects.Sprite {
     }
     
     updateMap(map) {
-        console.log("update ", map);
         bg.setTexture('map' + map);
         obstaclesGroup.clear(true);
         holesGroup.clear(true);
@@ -198,7 +195,6 @@ class ET extends Phaser.GameObjects.Sprite {
             holesGroup.clear(true);
 
             if (game.global.reposition == true) {
-                console.log("repos");
                 game.global.reposition = false;
                 this.x = 290;
                 this.y = 50;
@@ -206,10 +202,9 @@ class ET extends Phaser.GameObjects.Sprite {
             if (!keySPACE.isDown) {
                 this.body.setVelocityY(this.VELOCITY/2);
             }
-            this.body.setAllowGravity(true);
-            let ground = this.scene.add.rectangle(500,420,1000,42,0x6666ff);
-            let leftside = this.scene.add.rectangle(0,0,200,840,0x6666ff);
-            let rightside = this.scene.add.rectangle(500,420,30,840,0x6666ff);
+            let ground = this.scene.add.rectangle(500,420 + this.topUI,1000,42,0x6666ff);
+            let leftside = this.scene.add.rectangle(0,0,200 + this.topUI,840,0x6666ff);
+            let rightside = this.scene.add.rectangle(500,420 + this.topUI,30,840,0x6666ff);
 
             this.scene.physics.add.existing(ground);
             this.scene.physics.add.existing(leftside);
@@ -230,35 +225,35 @@ class ET extends Phaser.GameObjects.Sprite {
             symbols.setFrame(0);
         }
         if (map == 3) {
-            let hole1 = this.scene.add.rectangle(325, 90, 100, 35, 0x6666ff);
-            let hole2 = this.scene.add.rectangle(325, 285, 100, 45, 0x6666ff);
+            // let hole1 = this.scene.add.rectangle(325, 90 + this.topUI, 100, 35, 0x6666ff);
+            let hole2 = this.scene.add.rectangle(325, 285 + this.topUI, 100, 45, 0x6666ff);
             
-            this.scene.physics.add.existing(hole1);
+            // this.scene.physics.add.existing(hole1);
             this.scene.physics.add.existing(hole2);
             
-            hole1.body.setImmovable();
+            // hole1.body.setImmovable();
             hole2.body.setImmovable();
             
-            hole1.alpha = 0;
+            // hole1.alpha = 0;
             hole2.alpha = 0;
             
-            holesGroup.add(hole1);
+            // holesGroup.add(hole1);
             holesGroup.add(hole2);
             
-            let tree1 = this.scene.add.rectangle(130, 300, 45, 140, 0x6666ff);
-            let tree2 = this.scene.add.rectangle(520, 300, 45, 140, 0x6666ff);
+            // let tree1 = this.scene.add.rectangle(130, 300 + this.topUI, 45, 140, 0x6666ff);
+            // let tree2 = this.scene.add.rectangle(520, 300 + this.topUI, 45, 140, 0x6666ff);
             
-            this.scene.physics.add.existing(tree1);
-            this.scene.physics.add.existing(tree2);
+            // this.scene.physics.add.existing(tree1);
+            // this.scene.physics.add.existing(tree2);
             
-            tree1.body.setImmovable(true);
-            tree2.body.setImmovable(true);
+            // tree1.body.setImmovable(true);
+            // tree2.body.setImmovable(true);
             
-            tree1.alpha = 0;
-            tree2.alpha = 0;
+            // tree1.alpha = 0;
+            // tree2.alpha = 0;
             
-            obstaclesGroup.add(tree1);
-            obstaclesGroup.add(tree2);
+            // obstaclesGroup.add(tree1);
+            // obstaclesGroup.add(tree2);
             sceneName.text = "Field";
             symbols.setFrame(2);
         } else if (map == 4) {
