@@ -10,11 +10,12 @@ class Load extends Phaser.Scene{
         this.load.image('glow2', './assets/menu/glow2.png');
         this.load.image('glow3', './assets/menu/glow3.png');
         this.load.image('moon', './assets/menu/moon.png');
+        this.load.image('stars', './assets/menu/stars.png');
         this.load.image('text1', './assets/menu/text1.png');
         this.load.image('text2', './assets/menu/text2.png');
         this.load.image('tree1', './assets/menu/tree1.png');
         this.load.image('tree2', './assets/menu/tree2.png');
-        this.load.spritesheet('menu_ET', './assets/menu/et_sheet.png', {frameWidth: 480, frameHeight: 270, endFrame: 3});
+        this.load.spritesheet('menu_ET', './assets/menu/et_sheet.png', {frameWidth: 480, frameHeight: 270, endFrame: 2});
 
 
         this.load.spritesheet('background', './assets/background_spritesheet.png', { frameWidth: 320, frameHeight: 210, endFrame: 8, margin: 1, spacing: 3 });
