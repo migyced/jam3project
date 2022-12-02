@@ -15,9 +15,10 @@ let game = new Phaser.Game(config);
 let bg, bg_map;
 let uiBars, energyText, piecesText, sceneName;
 let symbols;
-let phoneUI;
+let phoneUI1, phoneUI2;
 let obstaclesGroup, holesGroup;
 let piece1, piece2, piece3, piecesGroup;
+let phone1, phone2, phone3, phoneGroup;
 let maxEnergy, energy, piecesNum, phoneNum;
 let npcSpawned;
 

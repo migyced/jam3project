@@ -69,10 +69,14 @@ class Play extends Phaser.Scene{
             align: "left"
         });
 
-        phoneUI = this.add.image((config.width/5), 35, "phone2");
-        phoneUI.setAlpha(0);
-        phoneUI.setScale(0.45);
-        phoneNum = 0;
+        phoneUI1 = this.add.image((config.width/5), 35, "phone1");
+        phoneUI1.setAlpha(0);
+        phoneUI1.setScale(0.45);
+
+        phoneUI2 = this.add.image((config.width/5 + 7), 20, "phone3");
+        phoneUI2.setAlpha(0);
+        phoneUI2.setAngle(10)
+        phoneUI2.setScale(0.35);
 
         symbols = this.add.sprite((game.config.width/2), 33, "symbols");
         symbols.setFrame(5);
@@ -91,6 +95,19 @@ class Play extends Phaser.Scene{
         piece2.alpha = 0;
         piece3.alpha = 0;
         
+        phone1 = this.physics.add.sprite(game.config.width / 3, 420, 'phone1');
+        phone1.setScale(0.3);
+
+        phone2 = this.physics.add.sprite(game.config.width / 3, 420, 'phone2');
+        phone2.setScale(0.3);
+
+        phone3 = this.physics.add.sprite(game.config.width / 3, 420, 'phone3');
+        phone3.setScale(0.3);
+
+        phone1.alpha = 0;
+        phone2.alpha = 0;
+        phone3.alpha = 0;
+
         this.mainSprite = new ET(this, game.config.width/2 - 43, game.config.height / 2 - 63, 'ET').setOrigin(0,0);
         this.mainSprite.setScale(1.5);
         this.mainSprite.play('walk');
@@ -105,16 +122,23 @@ class Play extends Phaser.Scene{
         obstaclesGroup = this.add.group({});
         holesGroup = this.add.group({});
         piecesGroup = this.add.group({});
+        phoneGroup = this.add.group({});
         
         piecesGroup.add(piece1);
         piecesGroup.add(piece2);
         piecesGroup.add(piece3);
+
+        phoneGroup.add(phone1);
+        phoneGroup.add(phone2);
+        phoneGroup.add(phone3);
 
         this.playerObstacleCollider = this.physics.add.collider(obstaclesGroup, this.mainSprite);
         this.playerHoleCollider = this.physics.add.collider(holesGroup, this.mainSprite, this.collideHole);
         
         this.physics.add.overlap(this.mainSprite, piecesGroup, this.overlapPieces);
         
+        this.physics.add.overlap(this.mainSprite, phoneGroup, this.overlapPhone);
+
         this.gameOver = false;
         
         // clock to randomly spawn the NPCs
@@ -142,16 +166,34 @@ class Play extends Phaser.Scene{
     }
     
     collideHole() {
-        console.log("hole");        
+        console.log("hole");
+        let rand = Phaser.Math.FloatBetween(0, 1);
+        if (rand >= 0.33 && game.global.phone_num != 4) {
+            game.global.show_phone = true;
+        }
         game.global.fall = true;
         game.global.surface;
     }
-    
+      
+    overlapPhone(sprite, phone) {
+        if (phone.alpha == 1) {
+            phoneGroup.killAndHide(phone);
+            phone.body.enable = false;
+            if (game.global.phone_num == 1) {
+                phoneUI1.setAlpha(1);
+            } else if (game.global.phone_num == 3) {
+                phoneUI2.setAlpha(1);
+            }
+            game.global.phone_num++;
+            game.global.show_phone = false;
+        }
+        
+    }
     overlapPieces(sprite, piece) {
         if (piece.alpha == 1) {
             piecesGroup.killAndHide(piece);
             piece.body.enable = false;
-        
+
             energy = Phaser.Math.MaxAdd(energy, 100, maxEnergy);
             piecesNum++;
         }

@@ -71,7 +71,9 @@ class Menu extends Phaser.Scene{
         game.global = {
             fall : false,
             reposition : true,
-            bg_map : 0
+            bg_map : 0,
+            phone_num: 1,
+            show_phone : false
         }
 
         //define keys
