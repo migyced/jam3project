@@ -22,6 +22,7 @@ class Load extends Phaser.Scene{
         this.load.spritesheet('ET', './assets/ET_sprites_002.png', { frameWidth: 29, frameHeight: 61, endFrame: 6, spacing: 1 });
         this.load.spritesheet('FBI', './assets/fbi_sprite.png', { frameWidth: 42, frameHeight: 64, endFrame: 3 });
         this.load.spritesheet('scientist', './assets/scientist_sprite.png', { frameWidth: 42, frameHeight: 64, endFrame: 3 });
+        this.load.spritesheet('spaceship', './assets/spaceship.png', {frameWidth: 88, frameHeight: 134, endFrame: 5});
         
         this.load.image('map1', './assets/map1.png');
         this.load.image('map2', './assets/map2.png');

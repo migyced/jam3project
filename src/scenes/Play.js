@@ -36,6 +36,13 @@ class Play extends Phaser.Scene{
            repeat: -1        
         });
 
+        this.anims.create({
+            key: 'spaceship_anim',
+            frames: this.anims.generateFrameNumbers('spaceship', {start: 0, end: 2}),
+            frameRate: 8,
+            repeat: -1
+        })
+
         const keys = ['walk', 'power', 'unpower', 'walkFBI', 'walkScientist'];
         
         piecesNum = 0;
@@ -108,8 +115,7 @@ class Play extends Phaser.Scene{
         phone2.alpha = 0;
         phone3.alpha = 0;
 
-        this.mainSprite = new ET(this, game.config.width/2 - 43, game.config.height / 2 - 63, 'ET').setOrigin(0,0);
-        this.mainSprite.setScale(1.5);
+        this.mainSprite = new ET(this, game.config.width/2, -150, 'ET').setScale(1.5);
         this.mainSprite.play('walk');
         
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -141,28 +147,75 @@ class Play extends Phaser.Scene{
 
         this.gameOver = false;
         
-        // clock to randomly spawn the NPCs
-        this.second = 1000;
-        this.timer = 0;
-        this.lastSpawnTime = 0;
-        npcSpawned = false;
-        this.clock = this.time.addEvent({delay: this.second, callback: this.spawnNPC, callbackScope: this, loop: true});
+        this.spaceship = this.physics.add.sprite(game.config.width/2, -150, 'spaceship').setScale(1.5).play('spaceship_anim');
+        this.tweens.add ({
+            targets: [this.spaceship],
+            y: game.config.height/2,
+            duration: 3000,
+            yoyo: true,
+            ease: 'Quad.easeInOut',
+            onComplete: () => {
+                this.mainSprite.controllable = true;
+                this.spaceship.anims.pause();
+                this.spaceship.setAlpha(0);
+                this.spaceship.setPosition(game.config.width/2, game.config.height/2);
+
+                this.physics.add.overlap(this.mainSprite, this.spaceship, () => {
+                    if (this.spaceship.alpha == 1) {
+                        this.mainSprite.controllable = false;
+                        this.mainSprite.body.destroy();
+                        this.mainSprite.setPosition(game.config.width/2, game.config.height/2);
+                        this.tweens.add ({
+                            targets: [this.mainSprite, this.spaceship],
+                            y: -150,
+                            duration: 3000,
+                            ease: 'Quad.easeInOut',
+                            onComplete: () => {
+                                this.scene.start('menuScene');
+                            }
+                        });
+                    }
+                });
+
+
+
+                // clock to randomly spawn the NPCs
+                this.second = 1000;
+                this.timer = 0;
+                this.lastSpawnTime = 0;
+                npcSpawned = false;
+                this.clock = this.time.addEvent({delay: this.second, callback: this.spawnNPC, callbackScope: this, loop: true});
+            }
+        });
+        this.tweens.add ({
+            targets: [this.mainSprite],
+            y: game.config.height/2,
+            duration: 3000,
+            ease: 'Quad.easeInOut'
+        });
     }
 
     update() {
-        
+        //console.log(this.spaceship.alpha)
+        if (game.global.phone_num == 4) {
+            if (game.global.bg_map == 1) {
+                this.spaceship.setAlpha(1);
+            } else {
+                this.spaceship.setAlpha(0);
+            }
+        }
         if(this.gameOver){
             this.scene.start('menuScene');
         } else {
-            this.mainSprite.update(bg, this.npc);
-            this.textUpdate();
-            this.phoneUpdate();
-            if (this.npc && npcSpawned) {
-                this.npc.update(this.mainSprite);
+            if (this.mainSprite.controllable) {
+                this.mainSprite.update(bg, this.npc);
+                this.textUpdate();
+                this.phoneUpdate();
+                if (this.npc && npcSpawned) {
+                    this.npc.update(this.mainSprite);
+                }
             }
         }
-        
-        //console.log(energy);
     }
     
     collideHole() {
@@ -270,7 +323,6 @@ class Play extends Phaser.Scene{
         }else if(phoneNum == 3){
             phoneUI.setTexture("thirdPhone");
             phoneUI.setAlpha(1);
-            //The player also wins??
         }
     }
 }

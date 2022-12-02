@@ -10,6 +10,7 @@ class ET extends Phaser.GameObjects.Sprite {
         this.topMargin = 25;
         this.VELOCITY = 400;
         this.topUI = 60;
+        this.controllable = false;
     }
 
     update(bg, npc){
